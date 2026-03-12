@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba de Eliminación de Datos de Usuario - ExploradorAds</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            width: 100%;
+            padding: 40px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 20px;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-family: inherit;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 5px rgba(102, 126, 234, 0.1);
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .checkbox-group {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .checkbox-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin-right: 10px;
+            cursor: pointer;
+            accent-color: #667eea;
+        }
+        
+        .checkbox-label {
+            cursor: pointer;
+            color: #555;
+            font-size: 14px;
+            margin: 0;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+        }
+        
+        button {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-submit {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-reset {
+            background: #e0e0e0;
+            color: #333;
+        }
+        
+        .btn-reset:hover {
+            background: #d0d0d0;
+        }
+        
+        .alert {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .alert.warning {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            color: #856404;
+        }
+        
+        .alert.success {
+            background: #d4edda;
+            border: 1px solid #28a745;
+            color: #155724;
+        }
+        
+        .alert.error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 3px;
+            font-size: 13px;
+            color: #0c5aa0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🗑️ Eliminación de Datos de Usuario</h1>
+            <p class="subtitle">ExploradorAds - Solicitud de Eliminación de Datos Personales</p>
+        </header>
+        
+        <div id="alertBox" class="alert"></div>
+        
+        <form id="deletionForm">
+            <div class="form-group">
+                <label for="userId">ID de Usuario *</label>
+                <input 
+                    type="text" 
+                    id="userId" 
+                    name="userId" 
+                    placeholder="ej: USER-12345" 
+                    required
+                >
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Correo Electrónico *</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    placeholder="tu@email.com" 
+                    required
+                >
+            </div>
+            
+            <div class="form-group">
+                <label for="fullName">Nombre Completo</label>
+                <input 
+                    type="text" 
+                    id="fullName" 
+                    name="fullName" 
+                    placeholder="Tu nombre completo"
+                >
+            </div>
+            
+            <div class="form-group">
+                <label>Datos a Eliminar *</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="profileData" name="dataTypes" value="profile" required>
+                        <label for="profileData" class="checkbox-label">Datos de Perfil (nombre, foto, biografía)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="activityData" name="dataTypes" value="activity">
+                        <label for="activityData" class="checkbox-label">Historial de Actividad (búsquedas, anuncios visitados)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="preferences" name="dataTypes" value="preferences">
+                        <label for="preferences" class="checkbox-label">Preferencias y Configuración</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="communications" name="dataTypes" value="communications">
+                        <label for="communications" class="checkbox-label">Historial de Comunicaciones</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="payments" name="dataTypes" value="payments">
+                        <label for="payments" class="checkbox-label">Información de Pagos</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="reason">Motivo de Eliminación</label>
+                <textarea 
+                    id="reason" 
+                    name="reason" 
+                    placeholder="Por favor, cuéntanos por qué deseas eliminar tus datos (opcional)"
+                ></textarea>
+            </div>
+            
+            <div class="checkbox-item">
+                <input type="checkbox" id="confirm" name="confirm" required>
+                <label for="confirm" class="checkbox-label">
+                    Confirmo que deseo eliminar mis datos de forma permanente e irreversible
+                </label>
+            </div>
+            
+            <div class="info-box">
+                ℹ️ Los datos serán eliminados en un plazo de 30 días. Esta acción no se puede deshacer.
+            </div>
+            
+            <div class="button-group">
+                <button type="submit" class="btn-submit">Solicitar Eliminación</button>
+                <button type="reset" class="btn-reset">Limpiar Formulario</button>
+            </div>
+        </form>
+    </div>
+    
+    <script>
+        const form = document.getElementById('deletionForm');
+        const alertBox = document.getElementById('alertBox');
+        
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Validar que al menos un tipo de dato sea seleccionado
+            const dataTypes = document.querySelectorAll('input[name="dataTypes"]:checked');
+            if (dataTypes.length === 0) {
+                showAlert('Por favor selecciona al menos un tipo de dato a eliminar', 'error');
+                return;
+            }
+            
+            // Recopilar datos del formulario
+            const formData = {
+                userId: document.getElementById('userId').value,
+                email: document.getElementById('email').value,
+                fullName: document.getElementById('fullName').value,
+                dataTypes: Array.from(dataTypes).map(cb => cb.value),
+                reason: document.getElementById('reason').value,
+                timestamp: new Date().toISOString(),
+                status: 'pending'
+            };
+            
+            // Simular envío
+            console.log('Solicitud de eliminación de datos:', formData);
+            
+            // Mostrar confirmación
+            showAlert(
+                `✓ Solicitud recibida. Te enviaremos un correo de confirmación a ${formData.email}`,
+                'success'
+            );
+            
+            // Limpiar formulario
+            form.reset();
+        });
+        
+        function showAlert(message, type) {
+            alertBox.textContent = message;
+            alertBox.className = `alert ${type}`;
+            alertBox.style.display = 'block';
+            
+            // Auto-ocultar después de 5 segundos
+            setTimeout(() => {
+                alertBox.style.display = 'none';
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
